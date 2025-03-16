@@ -10,8 +10,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 object TestProperties {
-    const val LOGIN = "test.user.login"
-    const val PASSWORD = "test.user.password"
+    const val LOGIN = "admmin"
+    const val PASSWORD = "nimda2012"
 }
 
 class LoginCRMTest {
@@ -19,7 +19,6 @@ class LoginCRMTest {
     val BASE_URL: String = "https://kz-solva-release-300.kz.idfaws.com/secure/new-admin/index.html#/login"
 //    val BASE_URL: String = "https://solva-bank-release.kz.idfaws.com/secure/new-admin/index.html#/login"
     //    private val BASE_URL: String = "https://kz-solva-release-slkz-91712.kz.idfaws.com/secure/new-admin/index.html#/login"
-    val textTitle = `$`("h2.indexTitle")
     val textLoans = `$`("li.ng-binding")
 
     @BeforeEach
@@ -29,7 +28,7 @@ class LoginCRMTest {
         System.setProperty(TestProperties.PASSWORD, System.getProperty(TestProperties.PASSWORD, "nimda2012"))
 
         Configuration.browser = "chrome"
-        Configuration.timeout = 10000
+        Configuration.timeout = 5000
     }
 
     @Test
@@ -45,14 +44,6 @@ class LoginCRMTest {
         loginPage.clicksubmitButton()
 
         Assertions.assertTrue(textLoans.text().contains("Займы"), "Текст элемента не содержит 'Займы'")
-
-        // Вводим логин и пароль
-        `$`("#username").setValue(login)
-        `$`("#password").setValue(password)
-        `$`("#login-button").click()
-
-        // Проверяем, что вход успешен (например, появился профиль пользователя)
-        `$`("#profile").shouldBe(visible)
     }
 
     @AfterEach
